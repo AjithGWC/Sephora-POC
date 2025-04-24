@@ -54,14 +54,24 @@ const Home = () => {
   }, [data, setData]);
 
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center gap-8 p-6 bg-gradient-to-br from-pink-50 to-yellow-50">
-      <h1 className="text-3xl font-bold text-gray-800">Choose Your Brand</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-xl">
-        {brands.map((b) => (
-          <BrandCard key={b.name} name={b.name} color={b.color} />
-        ))}
-      </div>
-    </div>
+    <>
+      {data && Object.keys(data).length > 0 ? (
+        <div className="min-h-screen flex flex-col justify-center items-center gap-8 p-6 bg-gradient-to-br from-pink-50 to-yellow-50">
+          <h1 className="text-3xl font-bold text-gray-800">Choose Your Brand</h1>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-xl">
+            {brands.map((b) => (
+              <BrandCard key={b.name} name={b.name} color={b.color} />
+            ))}
+          </div>
+        </div>
+      ) : (
+        <>
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-white bg-opacity-80">
+            <h1 className="text-2xl text-gray-600 animate-pulse">Loading...</h1>
+          </div>
+        </>
+      )}
+    </>
   );
 };
 

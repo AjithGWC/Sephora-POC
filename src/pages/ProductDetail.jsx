@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import SlidingPanels from "../component/SlidingPanels";
 import { GlobalContext } from "../globalContext/context";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 const brandColors = {
   "L'Oréal Professionnel": {
@@ -33,6 +33,12 @@ const Product = () => {
     setCategory("");
     navigate(-1)
   }
+
+  useEffect(() => {
+    if (!brand || !data || !data[brand]) {
+      navigate("/");
+    }
+  }, [brand, data, navigate]);
 
   return (
     <div className={`min-h-screen p-6 ${colors.bg}`}>

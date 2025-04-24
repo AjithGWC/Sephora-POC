@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { GlobalContext } from "../globalContext/context";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -59,6 +59,12 @@ const Category = () => {
 
       navigate("/product");
     }
+
+    useEffect(() => {
+      if (!brand || !data || !data[brand]) {
+        navigate("/");
+      }
+    }, [brand, data, navigate]);
     
     console.log("........", data);
     const categories = data[brand] || [];
