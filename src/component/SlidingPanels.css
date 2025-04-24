@@ -1,0 +1,118 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;600&display=swap');
+
+* {
+  /* padding: 0; */
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Nunito', sans-serif;
+}
+
+.container {
+  max-width: 90%;
+  margin: 50px auto;
+  padding: 0 20px;
+}
+
+.slides {
+  width: 100%;
+  display: flex;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.slide {
+  list-style-type: none;
+  height: 400px;
+  width: 5%;
+  overflow: hidden;
+
+  -webkit-transition: all 500ms linear;
+  -moz-transition: all 500ms linear;
+  -o-transition: all 500ms linear;
+  -ms-transition: all 500ms linear;
+  transition: all 500ms linear;
+}
+
+/* brands colors */
+.brand1 {
+    background-color: #f6a5c0; /* Rosy Blush */
+  }
+  .brand2 {
+    background-color: #e07b91; /* Vintage Rose */
+  }
+  .brand3 {
+    background-color: #c94f7c; /* Peony Punch */
+  }
+  .brand4 {
+    background-color: #a3367c; /* Mulberry Muse */
+  }
+  .brand5 {
+    background-color: #7c2f8e; /* Plum Velvet */
+  }
+  .brand6 {
+    background-color: #5d3c91; /* Iris Charm */
+  }
+  .brand7 {
+    background-color: #3d4a99; /* Deep Periwinkle */
+  }
+  .brand8 {
+    background-color: #2a2c5e; /* Midnight Orchid */
+  }
+  .brand9 {
+    background-color: #1f1b38; /* Grape Noir */
+  }
+  .brand10 {
+    background-color: #0e0c22; /* Cosmic Shadow */
+  }  
+
+.slide a.action {
+  display: block;
+  height: 100%;
+  position: relative;
+}
+
+.slide a.action span {
+  font-weight: 600;
+  color: #fff;
+  transform: rotate(270deg);
+  position: absolute;
+  top: 10%;
+  width: 140px;
+  left: -30%;
+  height: 100px;
+}
+
+.slide-content {
+  display: block;
+  width: 720px;
+  padding: 40px;
+  color: #fff;
+}
+
+.active {
+  width: 80%;
+}
+
+.active a.action {
+  display: none;
+}
+
+/* Media query for responsive design */
+@media (max-width: 480px) {
+  .slides {
+    display: block;
+  }
+  
+  .slide {
+    width: 100% !important;
+    margin-bottom: 15px;
+    height: auto;
+    border-radius: 10px;
+  }
+  
+  .slide-content {
+    width: 100% !important;
+    padding: 25px;
+    font-size: 95%;
+  }
+}
