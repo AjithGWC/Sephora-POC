@@ -1,11 +1,19 @@
 {
-  "name": "project-name",
+  "name": "Sephora",
   "version": "1.0.0",
   "size": {
     "width": 3,
     "height": 3
   },
-  "mapping": [],
+  "id": "a3d1e245-9651-404a-bf0c-c83fcbb94f2c",
+  "proxyId": "6f8b4138-f25e-46f8-a70d-22e4cacd9a7d",
+  "mapping": [
+    {
+      "dataSetId": "43260de2-d5a8-4090-803d-6fd30ab8d5ce",
+      "alias": "dataset",
+      "fields": []
+    }
+  ],
   "collections": [],
   "workflowMapping": [],
   "packagesMapping": []
