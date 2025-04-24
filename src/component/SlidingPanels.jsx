@@ -101,7 +101,7 @@ const SlidingPanels = ({brand, products}) => {
           {products.map((product, index) => (
             <li 
               key={index} 
-              className={`slide brand${(index % 10) + 1} ${index === activeIndex ? 'active' : ''}`}
+              className={`slide balanced${(index % 10) + 1} ${index === activeIndex ? 'active' : ''}`}
             >
               <a 
                 href="#" 
@@ -113,7 +113,7 @@ const SlidingPanels = ({brand, products}) => {
               >
                 <span>{product.name}</span>
               </a>
-              <div className="slide-content">
+              <div className="slide-content h-full">
                 <SlideContent brand={brand} productName={product.name} />
               </div>
             </li>

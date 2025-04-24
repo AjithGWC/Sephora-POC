@@ -34,36 +34,52 @@
 }
 
 /* brands colors */
-.brand1 {
-    background-color: #f6a5c0; /* Rosy Blush */
-  }
-  .brand2 {
-    background-color: #e07b91; /* Vintage Rose */
-  }
-  .brand3 {
-    background-color: #c94f7c; /* Peony Punch */
-  }
-  .brand4 {
-    background-color: #a3367c; /* Mulberry Muse */
-  }
-  .brand5 {
-    background-color: #7c2f8e; /* Plum Velvet */
-  }
-  .brand6 {
-    background-color: #5d3c91; /* Iris Charm */
-  }
-  .brand7 {
-    background-color: #3d4a99; /* Deep Periwinkle */
-  }
-  .brand8 {
-    background-color: #2a2c5e; /* Midnight Orchid */
-  }
-  .brand9 {
-    background-color: #1f1b38; /* Grape Noir */
-  }
-  .brand10 {
-    background-color: #0e0c22; /* Cosmic Shadow */
-  }  
+.balanced1 {
+  background-color: #d67b8a; /* Rosewood Glow */
+}
+.balanced2 {
+  background-color: #ce7f9c; /* Mauve Blossom */
+}
+.balanced3 {
+  background-color: #c77986; /* Dusty Rose */
+}
+.balanced4 {
+  background-color: #b76d82; /* Antique Pink */
+}
+.balanced5 {
+  background-color: #a45d78; /* Berry Blush */
+}
+.balanced6 {
+  background-color: #b58b8f; /* Terracotta Rose */
+}
+.balanced7 {
+  background-color: #d9a5a0; /* Warm Clay Pink */
+}
+.balanced8 {
+  background-color: #c98f99; /* Soft Sangria */
+}
+.balanced9 {
+  background-color: #b3798f; /* Vintage Orchid */
+}
+.balanced10 {
+  background-color: #9d6480; /* Mulberry Mauve */
+}
+.balanced11 {
+  background-color: #b06f85; /* Orchid Smoke */
+}
+.balanced12 {
+  background-color: #cd8697; /* Petal Rosewood */
+}
+.balanced13 {
+  background-color: #b47a88; /* Bloom Blush */
+}
+.balanced14 {
+  background-color: #c48795; /* Whisper Pink Plum */
+}
+.balanced15 {
+  background-color: #a26c7d; /* Rosy Earth */
+}
+
 
 .slide a.action {
   display: block;
@@ -85,8 +101,13 @@
 .slide-content {
   display: block;
   width: 720px;
-  padding: 40px;
+  padding: 20px;
   color: #fff;
+}
+
+.slide-content .header{
+  font-size: x-large;
+  font-weight: 600;
 }
 
 .active {
