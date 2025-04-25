@@ -20,7 +20,7 @@ const Product = () => {
 
     const {
         state: { data, brand, category },
-        setState: { setCategory, setBrand },
+        setState: { setCategory, setBrand, setActiveIndex },
       } = useContext(GlobalContext);
 
   // const brand = state?.brand || "Unknown";
@@ -31,6 +31,7 @@ const Product = () => {
 
   const handleBack = () => {
     setCategory("");
+    setActiveIndex(0)
     navigate(-1)
   }
 

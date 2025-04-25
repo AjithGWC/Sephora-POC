@@ -8,6 +8,7 @@ export const GlobalProvider = ({ children }) => {
   const [category, setCategory] = useState("");
   const [product, setProduct] = useState([]);
   const [data, setData] = useState("");
+    const [activeIndex, setActiveIndex] = useState(0);
 
   return (
     <GlobalContext.Provider
@@ -17,12 +18,14 @@ export const GlobalProvider = ({ children }) => {
           category,
           product,
           data,
+          activeIndex
         },
         setState: {
           setBrand,
           setCategory,
           setProduct,
           setData,
+          setActiveIndex
         },
       }}
     >

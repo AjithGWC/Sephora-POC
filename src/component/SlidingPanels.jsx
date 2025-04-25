@@ -1,10 +1,15 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import SlideContent from './slideContent';
 import './SlidingPanels.css';
+import { GlobalContext } from '../globalContext/context';
 
 const SlidingPanels = ({brand, products}) => {
-  const [activeIndex, setActiveIndex] = useState(0);
   const slidesContainerRef = useRef(null);
+
+  const {
+    state: { activeIndex },
+    setState: { setActiveIndex },
+  } = useContext(GlobalContext);
 
   // Handle panel clicking
   const handlePanelClick = (index) => {

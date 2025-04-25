@@ -16,7 +16,7 @@
 .slides {
   width: 100%;
   display: flex;
-  border-radius: 10px;
+  border-radius: 5px;
   overflow: hidden;
 }
 
@@ -101,13 +101,14 @@
 .slide-content {
   display: block;
   width: 720px;
-  padding: 20px;
+  padding: 10px 20px 20px 20px;
   color: #fff;
 }
 
 .slide-content .header{
   font-size: x-large;
   font-weight: 600;
+  margin-left: 5px;
 }
 
 .active {
@@ -136,4 +137,18 @@
     padding: 25px;
     font-size: 95%;
   }
+}
+
+.pie{
+  width: 75% !important;
+  height: 90% !important;
+  margin: 8px auto 0px auto;
+}
+
+.bar1{
+  height: 100% !important;
+}
+
+.line2{
+  height: 90% !important;
 }
