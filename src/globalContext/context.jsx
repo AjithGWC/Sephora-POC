@@ -7,8 +7,10 @@ export const GlobalProvider = ({ children }) => {
   const [brand, setBrand] = useState("");
   const [category, setCategory] = useState("");
   const [product, setProduct] = useState("");
+  const [allProduct, setAllProduct] = useState([]);
   const [data, setData] = useState("");
-    const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   return (
     <GlobalContext.Provider
@@ -18,14 +20,16 @@ export const GlobalProvider = ({ children }) => {
           category,
           product,
           data,
-          activeIndex
+          activeIndex,
+          allProduct
         },
         setState: {
           setBrand,
           setCategory,
           setProduct,
           setData,
-          setActiveIndex
+          setActiveIndex,
+          setAllProduct
         },
       }}
     >
