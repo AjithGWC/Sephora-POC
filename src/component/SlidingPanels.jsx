@@ -8,7 +8,7 @@ const SlidingPanels = ({brand, products}) => {
 
   const {
     state: { activeIndex },
-    setState: { setActiveIndex },
+    setState: { setActiveIndex, setProduct },
   } = useContext(GlobalContext);
 
   // Handle panel clicking
@@ -108,12 +108,14 @@ const SlidingPanels = ({brand, products}) => {
               key={index} 
               className={`slide balanced${(index % 10) + 1} ${index === activeIndex ? 'active' : ''}`}
             >
+              {console.log("--------", product)}
               <a 
                 href="#" 
                 className="action" 
                 onClick={(e) => {
                   e.preventDefault();
                   setActiveIndex(index);
+                  setProduct(product.name);
                 }}
               >
                 <span>{product.name}</span>

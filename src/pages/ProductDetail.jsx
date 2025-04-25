@@ -20,7 +20,7 @@ const Product = () => {
 
     const {
         state: { data, brand, category },
-        setState: { setCategory, setBrand, setActiveIndex },
+        setState: { setCategory, setBrand, setActiveIndex, setProduct },
       } = useContext(GlobalContext);
 
   // const brand = state?.brand || "Unknown";
@@ -31,12 +31,13 @@ const Product = () => {
 
   const handleBack = () => {
     setCategory("");
-    setActiveIndex(0)
+    setActiveIndex(0);
+    setProduct(product.name);
     navigate(-1)
   }
 
   useEffect(() => {
-    if (!brand || !data || !data[brand]) {
+    if (!brand || !data || !data[brand] || !category) {
       navigate("/");
     }
   }, [brand, data, navigate]);
