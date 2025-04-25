@@ -52,7 +52,7 @@ const LineChart2 = () => {
             display: false, // 🔥 Remove vertical grid lines
           },
           ticks: {
-            color: '#ffff', // 🔥 X-axis label color
+            color: '#4b5563', // 🔥 X-axis label color
           },
         },
         y: {
@@ -60,7 +60,7 @@ const LineChart2 = () => {
             display: false, // 🔥 Remove horizontal grid lines
           },
           ticks: {
-            color: '#ffff', // 🔥 X-axis label color
+            color: '#4b5563', // 🔥 X-axis label color
           },
         },
     },

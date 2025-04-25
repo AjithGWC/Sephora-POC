@@ -11,8 +11,8 @@ const brands = [
 const Home = () => {
 
   const {
-    state: { data },
-    setState: { setData },
+    state: { data, loading },
+    setState: { setData, setLoading },
   } = useContext(GlobalContext);
 
   useEffect(() => {
@@ -45,18 +45,20 @@ const Home = () => {
           });
           console.log(".........", transformedData);
           
+          setLoading(false);
           setData(transformedData);
         } catch (error) {
           console.error("Fetch error:", error);
         }
       };
+
       fetchData();
     }
   }, [data, setData]);
 
   return (
     <>
-      {data && Object.keys(data).length > 0 ? (
+      {data && !loading && Object.keys(data).length > 0 ? (
         <div className="min-h-screen flex flex-col justify-center items-center gap-8 p-6 bg-gradient-to-br from-pink-50 to-yellow-50">
           <h1 className="text-3xl font-bold text-gray-800">Choose Your Brand</h1>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-xl">

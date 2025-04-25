@@ -47,7 +47,7 @@ const BarChart2 = () => {
     scales: {
       x: {
         ticks: {
-          color: '#ffffff',
+          color: '#4b5563',
           font: {
             size: 9, // 👈 Smaller font size for X-axis
           },
@@ -58,7 +58,7 @@ const BarChart2 = () => {
       },
       y: {
         ticks: {
-          color: '#ffffff',
+          color: '#4b5563',
           font: {
             size: 9, // 👈 Smaller font size for X-axis
           },
