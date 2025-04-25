@@ -23,13 +23,14 @@ const Home = () => {
           // Assuming you have a global data fetch function or API call
           const fetchedData = await domo.post(
             "/sql/v1/dataset",
-            `SELECT \`Brand Name\`, \`Category Name\`, \`Product Name\` FROM dataset`,
+            `SELECT \`Brand Name\`, \`Category Name\`, \`Product Name\`, \`Selling_Price\` FROM dataset`,
             {
               contentType: "text/plain",
             }
           );
+          console.log("fechhhhhhhhhhh", fetchedData)
           const transformedData = {}; // Transform data structure as needed
-          fetchedData.rows.forEach(([brand, category, product]) => {
+          fetchedData.rows.forEach(([brand, category, product, sale]) => {
             if (!transformedData[brand]) {
               transformedData[brand] = [];
             }
