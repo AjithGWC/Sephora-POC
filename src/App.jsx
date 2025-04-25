@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import Category from "./pages/Category";
 import Product from "./pages/ProductDetail";
 import { GlobalProvider } from "./globalContext/context";
+import './App.css';
 
 function App() {
   return (
