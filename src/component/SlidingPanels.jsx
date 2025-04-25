@@ -108,7 +108,7 @@ const SlidingPanels = ({brand, products}) => {
               key={index} 
               className={`slide balanced${(index % 10) + 1} ${index === activeIndex ? 'active' : ''}`}
             >
-              {console.log("--------", product)}
+              {console.log("--------", product.name)}
               <a 
                 href="#" 
                 className="action" 
@@ -120,9 +120,11 @@ const SlidingPanels = ({brand, products}) => {
               >
                 <span>{product.name}</span>
               </a>
-              <div className="slide-content h-full">
-                <SlideContent brand={brand} productName={product.name} />
-              </div>
+              {index === activeIndex && (
+                <div className="slide-content h-full">
+                  <SlideContent brand={brand} productName={product.name} />
+                </div>
+              )}
             </li>
           ))}
         </ul>
