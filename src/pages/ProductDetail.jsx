@@ -32,7 +32,7 @@ const Product = () => {
   const handleBack = () => {
     setCategory("");
     setActiveIndex(0);
-    setProduct(product.name);
+    setProduct(products.name);
     navigate(-1)
   }
 
