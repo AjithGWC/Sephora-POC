@@ -141,12 +141,22 @@
 
 .pie{
   /* width: max-content !important; */
-  height: 90% !important;
-  margin: 8px auto 0px auto;
+  height: 75% !important;
+  margin: 4px auto 0px auto;
 }
 
 .bar1{
-margin-top: 24px !important;
+  margin-top: 24px !important;
+}
+
+.bar2{
+  height: 85px !important;
+  /* margin-top: 24px !important; */
+}
+
+.line1{
+  height: 85px !important;
+  /* margin-top: 24px !important; */
 }
 
 .line2{

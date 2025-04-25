@@ -70,9 +70,9 @@ const BarChart2 = () => {
   };
 
   return (
-    <div style={{ maxWidth: '600px', margin: '0 auto', padding: '5px', borderRadius: '12px', height: '100%' }}>
-      <Bar className='' data={data} options={options} />
-    </div>
+    // <div style={{ maxWidth: '600px', margin: '0 auto', padding: '5px', borderRadius: '12px', height: '100%' }}>
+      <Bar className='bar2' data={data} options={options} />
+    // </div>
   );
 };
 
