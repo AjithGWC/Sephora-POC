@@ -21,7 +21,8 @@ export const GlobalProvider = ({ children }) => {
           product,
           data,
           activeIndex,
-          allProduct
+          allProduct,
+          loading
         },
         setState: {
           setBrand,
@@ -29,7 +30,8 @@ export const GlobalProvider = ({ children }) => {
           setProduct,
           setData,
           setActiveIndex,
-          setAllProduct
+          setAllProduct,
+          setLoading
         },
       }}
     >

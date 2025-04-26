@@ -14,13 +14,13 @@ import { Bar } from 'react-chartjs-2';
 // Register necessary components
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-const BarChart1 = () => {
+const BarChart1 = ({datas}) => {
   const data = {
-    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple'],
+    labels: datas[0],
     datasets: [
       {
         label: 'Votes',
-        data: [12, 19, 3, 5, 2],
+        data: datas[1],
         backgroundColor: [
           '#3B0A45', // Midnight Plum
           '#1C1B1F', // Velvet Noir
@@ -71,7 +71,7 @@ const BarChart1 = () => {
 
   return (
     // <div style={{ maxWidth: '600px', margin: '0 auto', padding: '5px', borderRadius: '12px', height: '90%' }}>
-      <Bar className='bar1' data={data} options={options} />
+      <Bar className='bar1 hgt' data={data} options={options} />
     // </div>
   );
 };

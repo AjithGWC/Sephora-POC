@@ -24,7 +24,7 @@ const SlidingPanels = ({brand, products}) => {
         const slideWidth = activeSlide.offsetWidth;
         const slideContents = slidesContainerRef.current.querySelectorAll('.slide-content');
         slideContents.forEach(content => {
-          content.style.width = `${slideWidth}px`;
+          // content.style.width = `${slideWidth}px`;
         });
       }
     }

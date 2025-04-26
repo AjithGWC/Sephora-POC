@@ -14,13 +14,13 @@ import { Bar } from 'react-chartjs-2';
 // Register necessary components
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-const BarChart2 = () => {
+const BarChart2 = ({datas}) => {
   const data = {
-    labels: ['Sephora Ecom', 'Instore Purchase'],
+    labels: datas[0],
     datasets: [
       {
         label: 'Votes',
-        data: [12, 8],
+        data: datas[1],
         backgroundColor: [
           '#3B0A45', // Midnight Plum
           '#1C1B1F', // Velvet Noir

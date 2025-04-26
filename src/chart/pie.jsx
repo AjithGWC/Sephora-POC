@@ -11,12 +11,12 @@ import {
 // Register chart components
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const PieChart = () => {
+const PieChart = ({datas}) => {
   const data = {
-    labels: ['E-Commerce', 'Store'],
+    labels: datas[0],
     datasets: [
       {
-        data: [300, 50],
+        data: datas[1],
         backgroundColor: ['#7A4E5D', '#8C6F74'],
         borderColor: ['#fff', '#fff'],
         borderWidth: 1,
@@ -32,8 +32,13 @@ const PieChart = () => {
       },
     },
   };
-
-  return <Pie className='pie' data={data} options={options} />;
+  console.log(":::::::::::");
+  
+  return (
+    <div className='text-center h-[95%] flex justify-center'>
+        <Pie className='pie' data={data} options={options} />
+    </div>
+  );
 };
 
 export default PieChart;

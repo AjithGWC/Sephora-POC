@@ -26,8 +26,8 @@ const PercentageSlider = ({ percentage }) => {
         </div>
       </div>
       <div className="flex justify-between text-sm mb-1 text-stone-700">
+      <span>Male</span>
         <span>Female</span>
-        <span>Male</span>
       </div>
       <div className="text-center mt-2 text-sm text-gray-700">
         {/* {percentage}% value position */}

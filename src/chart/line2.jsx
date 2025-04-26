@@ -22,12 +22,13 @@ ChartJS.register(
   Legend
 );
 
-const LineChart2 = () => {
+const LineChart2 = ({datas}) => {
+  console.log(datas);
   const data = {
-    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+    labels: datas[0],
     datasets: [
       {
-        data: [65, 59, 80, 81, 56],
+        data: datas[1],
         borderColor: 'rgb(75, 64, 64)',
         tension: 0.4,
         fill: false,
@@ -66,7 +67,7 @@ const LineChart2 = () => {
     },
   };
 
-  return <Line className='line2' data={data} options={options} />;
+  return <Line className='line2 hgt' data={data} options={options} />;
 };
 
 export default LineChart2;
