@@ -237,10 +237,8 @@ const SlideContent = ({ brand, productName }) => {
                 src={`src/assets/products/${category}/${productName}.png`}
                 // src="src/assets/products/Hair Styling & Treatments/Metal Detox Anti-Breakage Pre-Shampoo Treatment.png" 
                 alt="Background"
-                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-0"
+               className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-0 w-full h-full object-contain"
             />
-
-
             {/* Overlay Content */}
             <div className="relative z-10  h-full">
                 <h1 className="header text-stone-700 font-semibold">{productName}</h1>
