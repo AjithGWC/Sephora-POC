@@ -2,6 +2,8 @@ import { useContext, useEffect } from "react";
 import BrandCard from "../component/BrandCard";
 import domo from "ryuu.js";
 import { GlobalContext } from "../globalContext/context";
+import loreal from '../assets/home/loreal1.jpg';
+import freck_beauty from '../assets/home/freck_beauty1.jpg'
 
 const brands = [
   { name: "L'Oréal Professionnel", color: "#F472B6" },
@@ -27,7 +29,7 @@ const Home = () => {
               contentType: "text/plain",
             }
           );
-          console.log("fechhhhhhhhhhh", fetchedData)
+          // console.log("fechhhhhhhhhhh", fetchedData)
           const transformedData = {}; // Transform data structure as needed
           fetchedData.rows.forEach(([brand, category, product, sale]) => {
             if (!transformedData[brand]) {
@@ -44,7 +46,7 @@ const Home = () => {
           });
           console.log(".........", transformedData);
 
-          // setLoading(false);
+          setLoading(false);
           setData(transformedData);
         } catch (error) {
           console.error("Fetch error:", error);
@@ -58,14 +60,27 @@ const Home = () => {
   return (
     <>
       {data && !loading && Object.keys(data).length > 0 ? (
-        <div className="min-h-screen flex flex-col justify-center items-center gap-8 p-6 bg-gradient-to-br from-pink-50 to-yellow-50">
-          <h1 className="text-3xl font-bold text-gray-800">Choose Your Brand</h1>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-xl">
-            {brands.map((b) => (
-              <BrandCard key={b.name} name={b.name} color={b.color} />
-            ))}
+        <>
+          <img className="relative h-screen bg-cover bg-center w-full" src="src/assets/home/background.jpg" />
+          <div className="absolute top-[15%] right-[10%]"> 
+            <div className=" flex flex-col justify-center items-center gap-8 p-6 ">
+              {/* <h1 className="text-3xl font-bold text-gray-800">Choose Your Brand</h1> */}
+              <div className=" bg-[#8B3A3A]/80 p-8 rounded-xl text-[#FBD2C0] max-w-xl ">
+                <h1 className="text-4xl md:text-5xl font-bold mb-4 text-[#fca88a] mb-10">BEAUTY SPACE</h1>
+                <p className="text-md leading-relaxed mb-4 text-[#EACDC4]">
+                  The Cannes International Film Festival is underway. We start looking
+                  at the blog of celebrities who came to the festival in Cannes. And
+                  today under the microscope — Laetitia Casta and her dress.
+                </p>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-xl">
+                {brands.map((b) => (
+                  <BrandCard key={b.name} name={b.name} color={b.color} image={b.name == "L'Oréal Professionnel" ? loreal : freck_beauty } />
+                ))}
+              </div>
+            </div>
           </div>
-        </div>
+        </>
       ) : (
         <>
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-white bg-opacity-80">

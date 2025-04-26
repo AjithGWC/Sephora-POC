@@ -244,7 +244,7 @@ const SlideContent = ({ brand, productName }) => {
                 <h1 className="header text-stone-700 font-semibold">{productName}</h1>
 
                 <div className="flex flex-col gap-2 mb-4 pb-3 pt-2 h-[95%] text-stone-700 font-semibold">
-                    <div className="grid grid-cols-4 gap-1">
+                    <div className="grid grid-cols-4 gap-2">
                         <div className="bg-white/40 py-1 px-2 rounded-lg">
                             <h1>Country's Total Transaction</h1>
                             {Array.isArray(line2) && line2.length > 0 && (
