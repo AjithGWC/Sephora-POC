@@ -9,7 +9,6 @@ const brands = [
 ];
 
 const Home = () => {
-
   const {
     state: { data, loading },
     setState: { setData, setLoading },
@@ -23,7 +22,7 @@ const Home = () => {
           // Assuming you have a global data fetch function or API call
           const fetchedData = await domo.post(
             "/sql/v1/dataset",
-            `SELECT \`Brand Name\`, \`Category Name\`, \`Product Name\`, \`Selling_Price\` FROM dataset`,
+            `SELECT \`Brand Name\`, \`Category Name\`, \`Product Name\`, \`Monthly Total\` FROM dataset`,
             {
               contentType: "text/plain",
             }
@@ -40,12 +39,12 @@ const Home = () => {
               transformedData[brand].push(categoryObj);
             }
             if (!categoryObj.products.some(p => p.name === product)) {
-              categoryObj.products.push({ name: product });
+              categoryObj.products.push({ name: product, sales: parseFloat(sale) });
             }
           });
           console.log(".........", transformedData);
-          
-          setLoading(false);
+
+          // setLoading(false);
           setData(transformedData);
         } catch (error) {
           console.error("Fetch error:", error);

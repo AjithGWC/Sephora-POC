@@ -218,20 +218,16 @@ const Category = () => {
         <h2 className={`text-3xl font-bold ${colors.text}`}>{brand} Categories</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 w-full max-w-6xl">
           {categories.map((category) => {
-            const filtered = category.products?.filter(p =>
-              last6Months.includes(p.month)
-            ) || [];
 
-            const totalSales = filtered.reduce((sum, item) => sum + parseFloat(item.sales || 0), 0);
-            const totalVariants = filtered.reduce((sum, item) => sum + parseInt(item.variants || 0), 0);
-
+            const totalSales = category.products?.reduce((sum, item) => sum + (item.sales || 0), 0) || 0;
+            const totalVariants = category.products?.length || 0;
             return (
-              <div 
-                key={category.name} 
-                className="card cursor-pointer" 
+              <div
+                key={category.name}
+                className="card cursor-pointer"
                 onClick={() => handleClick(category.name)}
               >
-                <div 
+                <div
                   className="content"
                   style={{ backgroundColor: colors.button, borderRadius: "22px" }}
                 >
@@ -242,14 +238,14 @@ const Category = () => {
                         {category.products ? `${category.products.length} products` : "Explore products"}
                       </span>
                       <div className="mt-1 text-sm text-white">
-                        Current Half Year: ₹{totalSales.toFixed(2)} <br />
+                        Current Half Year Sale: ₹{totalSales.toFixed(2)} <br />
                         Current Half Year Variants: {totalVariants}
                       </div>
                       <div><span className="link">View All →</span></div>
                     </div>
                     <div className="w-20 h-20 rounded-full overflow-hidden bg-white ml-4">
-                      <img 
-                        src={getImageForCategory(category.name)} 
+                      <img
+                        src={getImageForCategory(category.name)}
                         alt={category.name}
                         className="w-full h-full object-cover"
                       />
