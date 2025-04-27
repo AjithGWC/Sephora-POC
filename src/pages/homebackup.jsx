@@ -1,45 +1,51 @@
 import backgroundImage from '../assets/background.png';
 import loreal from '../assets/loreal1.jpg';
-import freck_beauty from '../assets/freck_beauty1.jpg'
+import freck_beauty from '../assets/freck_beauty1.jpg';
 
 const BrandCard = ({ name, image, color }) => {
   return (
-    <div 
-      className="rounded-xl overflow-hidden shadow-lg transition-transform duration-300 hover:scale-105"
-      style={{ backgroundColor: color }}
-    >
-      <img 
-        src={image} 
-        alt={`${name} brand`} 
-        className="w-full h-58 object-cover"
-      />
-      <div className="p-4">
-        <h3 className="font-bold text-xl mb-2 text-white">{name}</h3>
-        <div className="mt-2">
-          <a 
-            href="#" 
-            className="text-white font-medium flex items-center transition-transform hover:translate-x-1 text-[#fca88a]"
-            onClick={(e) => {
-              e.preventDefault();
-              console.log(`Exploring ${name}`);
-            }}
-          >
-            Explore 
-            <svg 
-              xmlns="http://www.w3.org/2000/svg" 
-              className="h-5 w-5 ml-1" 
-              fill="#fca88a" 
-              viewBox="0 0 24 24" 
-              stroke="currentColor"
+    <div className="card relative w-full h-64 rounded-xl overflow-hidden shadow-lg transition-transform duration-300 hover:scale-105">
+      {/* The animated blob background */}
+      <div className="blob" style={{ backgroundColor: color }}></div>
+      
+      {/* The semi-transparent background */}
+      <div className="bg"></div>
+      
+      {/* Card content */}
+      <div className="z-10 relative w-full h-full flex flex-col">
+        <img 
+          src={image} 
+          alt={`${name} brand`} 
+          className="w-full h-40 object-cover"
+        />
+        <div className="p-4 flex flex-col justify-between bg-white bg-opacity-80">
+          <h3 className="font-bold text-xl text-gray-800">{name}</h3>
+          <div className="mt-2">
+            <a 
+              href="#" 
+              className="font-medium flex items-center transition-transform hover:translate-x-1 text-[#fca88a]"
+              onClick={(e) => {
+                e.preventDefault();
+                console.log(`Exploring ${name}`);
+              }}
             >
-              <path 
-                strokeLinecap="round" 
-                strokeLinejoin="round" 
-                strokeWidth={2} 
-                d="M14 5l7 7m0 0l-7 7m7-7H3" 
-              />
-            </svg>
-          </a>
+              Explore 
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                className="h-5 w-5 ml-1" 
+                fill="#fca88a" 
+                viewBox="0 0 24 24" 
+                stroke="currentColor"
+              >
+                <path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth={2} 
+                  d="M14 5l7 7m0 0l-7 7m7-7H3" 
+                />
+              </svg>
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -48,8 +54,8 @@ const BrandCard = ({ name, image, color }) => {
 
 const Home = () => {
   const brands = [
-    { name: "L'Oréal Professionnel", image: loreal, color: "#8B3A3A" },
-    { name: "Freck Beauty", image: freck_beauty, color: "#8B3A3A" },
+    { name: "L'Oréal Professionnel", image: loreal, color: "#de0f3f" },
+    { name: "Freck Beauty", image: freck_beauty, color: "#de0f3f" },
   ];
 
   return (

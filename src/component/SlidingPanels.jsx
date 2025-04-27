@@ -3,7 +3,7 @@ import SlideContent from './slideContent';
 import './SlidingPanels.css';
 import { GlobalContext } from '../globalContext/context';
 
-const SlidingPanels = ({brand, products}) => {
+const SlidingPanels = ({ brand, subCategories }) => {
   const slidesContainerRef = useRef(null);
 
   const {
@@ -11,12 +11,10 @@ const SlidingPanels = ({brand, products}) => {
     setState: { setActiveIndex, setProduct },
   } = useContext(GlobalContext);
 
-  // Handle panel clicking
   const handlePanelClick = (index) => {
     setActiveIndex(index);
   };
 
-  // Update content width on resize
   const checkWidth = () => {
     if (slidesContainerRef.current && window.innerWidth > 480) {
       const activeSlide = slidesContainerRef.current.querySelector('.active');
@@ -30,7 +28,6 @@ const SlidingPanels = ({brand, products}) => {
     }
   };
 
-  // Add resize event listeners
   useEffect(() => {
     checkWidth();
     
@@ -39,14 +36,13 @@ const SlidingPanels = ({brand, products}) => {
     };
 
     window.addEventListener('resize', handleResize);
-    
-    // Debounced resize handler
+
     let resizeTimeout;
     const handleResizeEnd = () => {
       clearTimeout(resizeTimeout);
       resizeTimeout = setTimeout(checkWidth, 500);
     };
-    
+
     window.addEventListener('resize', handleResizeEnd);
 
     return () => {
@@ -55,74 +51,40 @@ const SlidingPanels = ({brand, products}) => {
     };
   }, []);
 
-  // Panel data
-//   const panels = [
-//     { 
-//       title: "Section title 1", 
-//       colorClass: "brand1"
-//     },
-//     { 
-//       title: "Section title 2", 
-//       colorClass: "brand2" 
-//     },
-//     { 
-//       title: "Section title 3", 
-//       colorClass: "brand3" 
-//     },
-//     { 
-//       title: "Section title 4", 
-//       colorClass: "brand4" 
-//     },
-//     { 
-//       title: "Section title 5", 
-//       colorClass: "brand5" 
-//     },
-//     { 
-//       title: "Section title 6", 
-//       colorClass: "brand6" 
-//     },
-//     { 
-//       title: "Section title 7", 
-//       colorClass: "brand7" 
-//     },
-//     { 
-//       title: "Section title 8", 
-//       colorClass: "brand8" 
-//     },
-//     { 
-//       title: "Section title 9", 
-//       colorClass: "brand9" 
-//     },
-//     { 
-//       title: "Section title 10", 
-//       colorClass: "brand10" 
-//     },
-//   ];
-
   return (
     <div className="container">
       <div className="container-slides">
         <ul className="slides" ref={slidesContainerRef}>
-          {products.map((product, index) => (
+          {subCategories.map((subCategory, index) => (
             <li 
               key={index} 
               className={`slide balanced${(index % 10) + 1} ${index === activeIndex ? 'active' : ''}`}
             >
-              {console.log("--------", product.name)}
               <a 
                 href="#" 
                 className="action" 
                 onClick={(e) => {
                   e.preventDefault();
                   setActiveIndex(index);
-                  setProduct(product.name);
+                  // Optionally set subCategory as active to display it in SlideContent
+                  setProduct(subCategory.name);  
                 }}
               >
-                <span>{product.name}</span>
+                <span>{subCategory.name}</span> 
               </a>
-              {index === activeIndex && (
+              
+              {/* If active index matches, display the slide content */}
+                {/* If active index matches, display the slide content */}
+                {index === activeIndex && (
                 <div className="slide-content h-full">
-                  <SlideContent brand={brand} productName={product.name} />
+                  {/* Display the first product of the selected subCategory */}
+                  {subCategory.products && subCategory.products.length > 0 && (
+                    <SlideContent 
+                      brand={brand} 
+                      subCategoryName={subCategory.name} 
+                      productName={subCategory.products[0].name}  // Pass the first product
+                    />
+                  )}
                 </div>
               )}
             </li>
@@ -130,7 +92,6 @@ const SlidingPanels = ({brand, products}) => {
         </ul>
       </div>
     </div>
-
   );
 };
 

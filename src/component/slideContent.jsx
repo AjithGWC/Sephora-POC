@@ -7,9 +7,10 @@ import BarChart2 from "../chart/bar2";
 import PercentageSlider from "../chart/percentage";
 import { GlobalContext } from "../globalContext/context";
 import domo from "ryuu.js";
+import { BsBarChartLine } from "react-icons/bs";
 
-const SlideContent = ({ brand, productName }) => {
-    // console.log(brand, productName);
+const SlideContent = ({ brand, subCategoryName, productName }) => {
+    console.log("brand", productName);
     const [line1, setLine1] = useState([]);
     const [line2, setLine2] = useState([]);
     const [bar1, setBar1] = useState([]);
@@ -32,19 +33,19 @@ const SlideContent = ({ brand, productName }) => {
                     WHERE \`Product Name\` = '${productName}'
                     GROUP BY \`Country\`
                 `;
-                
+
                 const fetchedData = await domo.post(
                     "/sql/v1/dataset",
                     query,
                     {
                         contentType: "text/plain",
                     }
-                );  
+                );
                 const countryTransactions = fetchedData.rows.reduce(
                     (acc, [country, totalTransactions]) => {
-                      acc[0].push(country);
-                      acc[1].push(totalTransactions);
-                      return acc;
+                        acc[0].push(country);
+                        acc[1].push(totalTransactions);
+                        return acc;
                     },
                     [[], []] // Start with two empty arrays
                 );
@@ -55,7 +56,7 @@ const SlideContent = ({ brand, productName }) => {
             }
         };
 
-        const fetchChannelType = async() => {
+        const fetchChannelType = async () => {
             try {
                 const fetchedData = await domo.post(
                     "/sql/v1/dataset",
@@ -69,9 +70,9 @@ const SlideContent = ({ brand, productName }) => {
                 );
                 const channelType = fetchedData.rows.reduce(
                     (acc, [Channel_Type, total]) => {
-                      acc[0].push(Channel_Type);
-                      acc[1].push(total);
-                      return acc;
+                        acc[0].push(Channel_Type);
+                        acc[1].push(total);
+                        return acc;
                     },
                     [[], []] // Start with two empty arrays
                 );
@@ -86,7 +87,7 @@ const SlideContent = ({ brand, productName }) => {
             }
         }
 
-        const fetchMostSales = async() => {
+        const fetchMostSales = async () => {
             try {
                 const fetchedData = await domo.post(
                     "/sql/v1/dataset",
@@ -106,9 +107,9 @@ const SlideContent = ({ brand, productName }) => {
                 // }, {});
                 const sales = fetchedData.rows.reduce(
                     (acc, [Month, total]) => {
-                      acc[0].push(Month);
-                      acc[1].push(total);
-                      return acc;
+                        acc[0].push(Month);
+                        acc[1].push(total);
+                        return acc;
                     },
                     [[], []] // Start with two empty arrays
                 );
@@ -121,16 +122,16 @@ const SlideContent = ({ brand, productName }) => {
 
         const fetchGenderData = async () => {
             try {
-        
+
                 const fetchedData = await domo.post(
                     "/sql/v1/dataset",
                     `SELECT SUM(\`Male\`) AS \`Male_Sum\`, SUM(\`Female\`) AS \`Female_Sum\`
                       FROM dataset
                       WHERE \`Product Name\` = '${productName}';`,
                     {
-                      contentType: "text/plain",
+                        contentType: "text/plain",
                     }
-                  );
+                );
 
                 const genderCalculation = {
                     male: fetchedData.rows[0][0], // Male_Sum value from the first row
@@ -141,13 +142,13 @@ const SlideContent = ({ brand, productName }) => {
                 const malePercentage = total ? (genderCalculation.male / total) * 100 : 0;
                 setGenderPercentage(malePercentage)
                 // console.log("genderCalculation:", genderCalculation);
-        
+
             } catch (error) {
                 console.error("Fetch error:", error);
             }
-        };   
+        };
 
-        const fetchChannelName = async() => {
+        const fetchChannelName = async () => {
             try {
                 const fetchedData = await domo.post(
                     "/sql/v1/dataset",
@@ -166,9 +167,9 @@ const SlideContent = ({ brand, productName }) => {
                 // }, {});
                 const channelName = fetchedData.rows.reduce(
                     (acc, [Channel_Name, total]) => {
-                      acc[0].push(Channel_Name);
-                      acc[1].push(total);
-                      return acc;
+                        acc[0].push(Channel_Name);
+                        acc[1].push(total);
+                        return acc;
                     },
                     [[], []] // Start with two empty arrays
                 );
@@ -177,49 +178,49 @@ const SlideContent = ({ brand, productName }) => {
             } catch (error) {
                 console.error("Fetch error:", error);
             }
-        }  
-        
+        }
+
         const fetchCountryMonthlyTotal = async (productName) => {
             try {
-              const fetchedData = await domo.post(
-                "/sql/v1/dataset",
+                const fetchedData = await domo.post(
+                    "/sql/v1/dataset",
                     `SELECT \`Month\`, SUM(\`Monthly Total\`) AS \`Monthly_Total\`
                     FROM dataset
                     WHERE \`Product Name\` = '${productName}'
                     GROUP BY \`Month\`
                     ORDER BY \`Month\``,
-                {
-                  contentType: "text/plain",
-                }
-              );
-              console.log("fetchedData:", fetchedData);
-          
-            //   const countryMonthlyTotals = fetchedData.rows.reduce((acc, [Month, total]) => {
-            //     acc[Month] = total;
-            //     return acc;
-            //     }, {});
+                    {
+                        contentType: "text/plain",
+                    }
+                );
+                console.log("fetchedData:", fetchedData);
+
+                //   const countryMonthlyTotals = fetchedData.rows.reduce((acc, [Month, total]) => {
+                //     acc[Month] = total;
+                //     return acc;
+                //     }, {});
                 const countryMonthlyTotals = fetchedData.rows.reduce(
                     (acc, [Month, total]) => {
-                      acc[0].push(Month);
-                      acc[1].push(total);
-                      return acc;
+                        acc[0].push(Month);
+                        acc[1].push(total);
+                        return acc;
                     },
                     [[], []] // Start with two empty arrays
                 );
                 setLine2(countryMonthlyTotals);
-              // Assuming fetchedData.rows is an array of the returned rows
-            //   const countryMonthlyTotals = fetchedData.rows.map(row => ({
-            //     Month: row.Month,
-            //     totalMonthlyTotal: row.Total_Monthly_Total,
-            //   }));
-          
-              console.log("Country Monthly Totals:", countryMonthlyTotals);
+                // Assuming fetchedData.rows is an array of the returned rows
+                //   const countryMonthlyTotals = fetchedData.rows.map(row => ({
+                //     Month: row.Month,
+                //     totalMonthlyTotal: row.Total_Monthly_Total,
+                //   }));
+
+                console.log("Country Monthly Totals:", countryMonthlyTotals);
             } catch (error) {
-              console.error("Fetch error:", error);
+                console.error("Fetch error:", error);
             }
-          };          
-    
-        if (productName){
+        };
+
+        if (productName) {
             fetchCountryTransaction();
             fetchChannelType();
             fetchMostSales();
@@ -227,70 +228,70 @@ const SlideContent = ({ brand, productName }) => {
             fetchChannelName();
             fetchCountryMonthlyTotal();
         }
-    }, [productName]);    
+    }, [productName]);
 
     return (
         <div className="relative w-full h-full">
             {/* Background Image */}
             {/* {console.log("???????", `/assets/products/${category}/${productName}.png`)} */}
             <img
-                src={`src/assets/products/${category}/${productName}.png`}
+                src={`src/assets/products/${category}/${subCategoryName}.png`}
                 // src="src/assets/products/Hair Styling & Treatments/Metal Detox Anti-Breakage Pre-Shampoo Treatment.png" 
                 alt="Background"
-               className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-0 w-full h-full object-contain"
+                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-0 opacity-90 w-full h-full object-contain"
             />
             {/* Overlay Content */}
             <div className="relative z-10  h-full">
-                <h1 className="header text-stone-700 font-semibold">{productName}</h1>
+                <h1 className="header text-white font-semibold">{subCategoryName}</h1>
 
-                <div className="flex flex-col gap-2 mb-4 pb-3 pt-2 h-[95%] text-stone-700 font-semibold">
+                <div className="flex flex-col gap-2 mb-4 pb-3 pt-4 h-[500px] text-stone-700 font-semibold">
                     <div className="grid grid-cols-4 gap-2">
-                        <div className="bg-white/40 py-1 px-2 rounded-lg">
-                            <h1>Country's Total Transaction</h1>
+                        <div className="bg-white/60 p-5 rounded-lg h-full">
+                            <h1 className="flex items-center gap-2">
+                                <BsBarChartLine className="w-5 h-5" />
+                                <span>Total Sales</span>
+                            </h1>
                             {Array.isArray(line2) && line2.length > 0 && (
-                                <LineChart1 datas={line1}/>
+                                <LineChart2 datas={bar1} />
                             )}
                         </div>
-                        <div className="bg-white/40 p-2 rounded-lg">
+                        <div className="bg-white/60 py-5 px-7 rounded-lg">
+                            <h1>Country's Total Transaction</h1>
+                            {Array.isArray(line2) && line2.length > 0 && (
+                                <LineChart1 datas={line1} />
+                            )}
+                        </div>
+                        <div className="flex flex-col gap-2 mb-4 h-full">
+                            <div className="bg-white/60 p-2 rounded-lg h-full">21</div>
+                            <div className="bg-white/60 p-2 rounded-lg h-full">21</div>
+                        </div>
+                        <div className="bg-white/60 p-5 rounded-lg">
                             <h1>Gender Percentage</h1>
                             {Array.isArray(line2) && line2.length > 0 && (
                                 <PercentageSlider percentage={genderPercentage} />
                             )}
                         </div>
-                        <div className="flex flex-col gap-2 mb-4 h-full">
-                            <div className="bg-white/40 p-2 rounded-lg h-full">21</div>
-                            <div className="bg-white/40 p-2 rounded-lg h-full">21</div>
-                        </div>
-                        <div className="bg-white/40 p-2 rounded-lg">
-                            <h1>Channel Name</h1>
-                            {Array.isArray(line2) && line2.length > 0 && (
-                                <BarChart2  datas={bar2}/>
-                            )}
-                        </div>
                     </div>
-
                     <div className="grid grid-cols-3 gap-2 items-stretch h-[90%]">
-                        <div className="bg-white/40 pt-2 rounded-lg h-[93%]">
+                        <div className="bg-white/60 pt-5 rounded-lg h-[90%]">
                             <h1 className="pl-3">Channel Type</h1>
                             <div className="h-full max-h-[180px] overflow-hidden">
-                            {Array.isArray(line2) && line2.length > 0 && (
-                                <PieChart datas={pie} />
-                            )}
+                                {Array.isArray(line2) && line2.length > 0 && (
+                                    <PieChart datas={pie} />
+                                )}
                             </div>
                         </div>
-                        <div className="bg-white/40 p-2 rounded-lg h-[93%]">
+                        <div className="bg-white/60 p-5 rounded-lg h-[90%]">
                             <h1>Most Sales</h1>
                             {Array.isArray(line2) && line2.length > 0 && (
                                 <BarChart1 datas={bar1} />
                             )}
                         </div>
-                        <div className="flex flex-col gap-2 h-[93%]">
-                            <div className="bg-white/40 p-2 rounded-lg h-full">
-                                <h1>Country Wise Monthly Total</h1>
-                                {Array.isArray(line2) && line2.length > 0 && (
-                                    <LineChart2 datas={bar1} />
-                                )}
-                            </div>
+                        <div className="bg-white/60 p-5 h-[90%] rounded-lg">
+                            <h1>Channel Name</h1>
+                            {Array.isArray(line2) && line2.length > 0 && (
+                                <BarChart2 datas={bar2} />
+                            )}
                         </div>
                     </div>
                 </div>

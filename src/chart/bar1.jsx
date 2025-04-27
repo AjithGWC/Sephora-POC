@@ -1,4 +1,3 @@
-// BarChart.js
 import React from 'react';
 import {
   Chart as ChartJS,
@@ -43,6 +42,9 @@ const BarChart1 = ({datas}) => {
         display: false,
         text: 'Color Preference Chart',
       },
+      tooltip: {
+        display: true,
+      }
     },
     scales: {
       x: {
@@ -57,22 +59,21 @@ const BarChart1 = ({datas}) => {
         },
       },
       y: {
+        display: false, // Hide Y-axis completely
         ticks: {
-          color: '#4b5563',
-          font: {
-            size: 9, // 👈 Smaller font size for X-axis
-          },
-        },  grid: {
-            display: false, // 👈 Remove Y-axis grid lines
-        },       
+          display: false, // Hide ticks
+        },
+        grid: {
+          display: false, // Remove Y-axis grid lines
+        },
       },
     },
   };
 
   return (
-    // <div style={{ maxWidth: '600px', margin: '0 auto', padding: '5px', borderRadius: '12px', height: '90%' }}>
+    <div className="w-full h-full p-2"> 
       <Bar className='bar1 hgt' data={data} options={options} />
-    // </div>
+    </div>
   );
 };
 

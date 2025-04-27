@@ -22,7 +22,7 @@ ChartJS.register(
   Legend
 );
 
-const LineChart1 = ({datas}) => {
+const LineChart1 = ({ datas }) => {
   const data = {
     labels: datas[0],
     datasets: [
@@ -31,6 +31,7 @@ const LineChart1 = ({datas}) => {
         borderColor: 'rgb(75, 64, 64)',
         tension: 0.4,
         fill: false,
+        pointBackgroundColor: 'rgb(75, 64, 64)', 
       },
     ],
   };
@@ -40,33 +41,30 @@ const LineChart1 = ({datas}) => {
     plugins: {
       title: {
         display: false,
-        text: 'Monthly Sales',
       },
       legend: {
         display: false,
       },
+      tooltip: {
+        enabled: true, // ✅ Enable tooltip
+        backgroundColor: 'rgba(255, 255, 255, 0.9)', 
+        titleColor: '#000', 
+        bodyColor: '#000',  
+        borderColor: '#ccc',
+        borderWidth: 1,
+      },
     },
     scales: {
-        x: {
-          grid: {
-            display: false, // 🔥 Remove vertical grid lines
-          },
-          ticks: {
-            color: '#4b5563', // 🔥 X-axis label color
-          },
-        },
-        y: {
-          grid: {
-            display: false, // 🔥 Remove horizontal grid lines
-          },
-          ticks: {
-            color: '#4b5563', // 🔥 X-axis label color
-          },
-        },
+      x: {
+        display: false, // ✅ Hide x-axis
+      },
+      y: {
+        display: false, // ✅ Hide y-axis
+      },
     },
   };
 
-  return <Line className='line1' data={data} options={options} />;
+  return <Line className="line1" data={data} options={options} />;
 };
 
 export default LineChart1;

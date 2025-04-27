@@ -24,27 +24,46 @@ const Home = () => {
           // Assuming you have a global data fetch function or API call
           const fetchedData = await domo.post(
             "/sql/v1/dataset",
-            `SELECT \`Brand Name\`, \`Category Name\`, \`Product Name\`, \`Monthly Total\` FROM dataset`,
+            `SELECT \`Brand Name\`, \`Category Name\`, \`Product Name\`, \`Monthly Total\`, \`Sub Category Name\` FROM dataset`,
             {
               contentType: "text/plain",
             }
           );
-          // console.log("fechhhhhhhhhhh", fetchedData)
+          console.log("fechhhhhhhhhhh", fetchedData)
           const transformedData = {}; // Transform data structure as needed
-          fetchedData.rows.forEach(([brand, category, product, sale]) => {
+          fetchedData.rows.forEach(([brand, category, product, sale, subCategory ]) => {
             if (!transformedData[brand]) {
               transformedData[brand] = [];
             }
-            let categoryObj = transformedData[brand].find(c => c.name === category);
+
+            let categoryObj = transformedData[brand].find((c) => c.name === category);
             if (!categoryObj) {
-              categoryObj = { name: category, products: [] };
+              categoryObj = { name: category, subCategories: [] };
               transformedData[brand].push(categoryObj);
             }
-            if (!categoryObj.products.some(p => p.name === product)) {
-              categoryObj.products.push({ name: product, sales: parseFloat(sale) });
+      
+            let subCategoryObj = categoryObj.subCategories.find((sc) => sc.name === subCategory);
+            if (!subCategoryObj) {
+              subCategoryObj = { name: subCategory, products: [] };
+              categoryObj.subCategories.push(subCategoryObj);
+            }
+      
+            if (!subCategoryObj.products.some((p) => p.name === product)) {
+              subCategoryObj.products.push({ name: product, sales: parseFloat(sale) });
             }
           });
-          console.log(".........", transformedData);
+      
+          console.log("Transformed Data:", transformedData);
+          //   let categoryObj = transformedData[brand].find(c => c.name === category);
+          //   if (!categoryObj) {
+          //     categoryObj = { name: category, products: [] };
+          //     transformedData[brand].push(categoryObj);
+          //   }
+          //   if (!categoryObj.products.some(p => p.name === product)) {
+          //     categoryObj.products.push({ name: product, sales: parseFloat(sale) });
+          //   }
+          // });
+          // console.log(".........", transformedData);
 
           setLoading(false);
           setData(transformedData);

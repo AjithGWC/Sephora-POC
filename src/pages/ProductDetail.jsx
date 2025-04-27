@@ -5,11 +5,11 @@ import { useContext, useEffect } from "react";
 
 const brandColors = {
   "L'Oréal Professionnel": {
-    bg: "bg-pink-100",
+    bg: "bg-white",
     text: "text-pink-700",
   },
   "Freck Beauty": {
-    bg: "bg-yellow-100",
+    bg: "bg-white",
     text: "text-yellow-600",
   },
 };
@@ -18,15 +18,16 @@ const Product = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
 
-    const {
-        state: { data, brand, category },
-        setState: { setCategory, setBrand, setActiveIndex, setProduct },
-      } = useContext(GlobalContext);
+  const {
+    state: { data, brand, category },
+    setState: { setCategory, setBrand, setActiveIndex, setProduct },
+  } = useContext(GlobalContext);
 
   // const brand = state?.brand || "Unknown";
   // const categoryName = state?.categoryName || "Unnamed";
-  const products = data[brand]?.find(cat => cat.name === category)?.products || [];
+  // const products = data[brand]?.find(cat => cat.name === category)?.products || [];
 
+  const subCategories = data[brand]?.find(cat => cat.name === category)?.subCategories || [];
   const colors = brandColors[brand] || {};
 
   const handleBack = () => {
@@ -46,7 +47,7 @@ const Product = () => {
     <div className={`min-h-screen p-6 ${colors.bg}`}>
       {/* Back Button */}
       <button
-         onClick={handleBack}
+        onClick={handleBack}
         className="mb-4 text-sm px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition cursor-pointer"
       >
         ← Back
@@ -56,11 +57,17 @@ const Product = () => {
         <h2 className={`text-3xl font-bold ${colors.text}`}>
           {brand} - {category}
         </h2>
-        {products.length > 0 ? (
+        {/* {products.length > 0 ? (
           <SlidingPanels brand={brand} products={products} />
         ) : (
           <p className="text-gray-600 mt-4">No products available.</p>
+        )} */}
+        {subCategories.length > 0 ? (
+          <SlidingPanels brand={brand} subCategories={subCategories} />
+        ) : (
+          <p className="text-gray-600 mt-4">No subcategories available.</p>
         )}
+
       </div>
     </div>
   );
