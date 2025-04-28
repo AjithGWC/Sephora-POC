@@ -71,11 +71,7 @@ const Category = () => {
     navigate("/product");
   };
 
-  useEffect(() => {
-    if (!brand || !data || !data[brand]) {
-      navigate("/");
-    }
-  }, [brand, data, navigate]);
+
 
   const last6Months = useMemo(() => getLast6Months(), []);
   const subCategories = data[brand] || [];
