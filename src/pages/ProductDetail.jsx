@@ -23,11 +23,15 @@ const Product = () => {
     setState: { setCategory, setBrand, setActiveIndex, setProduct },
   } = useContext(GlobalContext);
 
+
+   console.log("data", data)
   // const brand = state?.brand || "Unknown";
   // const categoryName = state?.categoryName || "Unnamed";
   // const products = data[brand]?.find(cat => cat.name === category)?.products || [];
 
   const subCategories = data[brand]?.find(cat => cat.name === category)?.subCategories || [];
+  console.log("subcategori", subCategories)
+
   const colors = brandColors[brand] || {};
 
   const handleBack = () => {

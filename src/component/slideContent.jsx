@@ -61,31 +61,31 @@ const SlideContent = ({ brand, subCategoryName, productName }) => {
             }
         };
 
-        const fetchUniqueProductsCount = async () => {
-            try {
-                const query = `
-                    SELECT COUNT(DISTINCT \`Product Name\`) AS unique_product_count
-                    FROM dataset
-                    WHERE \`Sub Category\` = '${subCategoryName}'
-                `;
+        // const fetchUniqueProductsCount = async () => {
+        //     try {
+        //         const query = `
+        //             SELECT COUNT(DISTINCT \`Product Name\`) AS unique_product_count
+        //             FROM dataset
+        //             WHERE \`Sub Category\` = '${subCategoryName}'
+        //         `;
         
-                const fetchedData = await domo.post(
-                    "/sql/v1/dataset",
-                    query,
-                    {
-                        contentType: "text/plain",
-                    }
-                );
+        //         const fetchedData = await domo.post(
+        //             "/sql/v1/dataset",
+        //             query,
+        //             {
+        //                 contentType: "text/plain",
+        //             }
+        //         );
                 
-                // Assuming the result has the count in the first column
-                const uniqueProductCount = fetchedData.rows[0]; // The count will be in the first element of the first row
+        //         // Assuming the result has the count in the first column
+        //         const uniqueProductCount = fetchedData.rows[0]; // The count will be in the first element of the first row
         
-                console.log("Unique Product Count:", uniqueProductCount);
-                setProductCount(uniqueProductCount);  // Assuming you have a state to store the count
-            } catch (error) {
-                console.error("Fetch error:", error);
-            }
-        };
+        //         console.log("Unique Product Count:", uniqueProductCount);
+        //         setProductCount(uniqueProductCount);  // Assuming you have a state to store the count
+        //     } catch (error) {
+        //         console.error("Fetch error:", error);
+        //     }
+        // };
 
         const fetchChannelType = async () => {
             try {
@@ -117,27 +117,27 @@ const SlideContent = ({ brand, subCategoryName, productName }) => {
                 console.error("Fetch error:", error);
             }
         }
-        const fetchUniqueCustomerCount = async () => {
-            try {
-                const fetchedData = await domo.post(
-                    "/sql/v1/dataset",
-                    `SELECT COUNT(DISTINCT \`Unique Customers\`) AS unique_customer_count FROM dataset
-                        WHERE \`Sub Category\` = '${subCategoryName}'`,
-                    {
-                        contentType: "text/plain",
-                    }
-                );
+        // const fetchUniqueCustomerCount = async () => {
+        //     try {
+        //         const fetchedData = await domo.post(
+        //             "/sql/v1/dataset",
+        //             `SELECT COUNT(DISTINCT \`Unique Customers\`) AS unique_customer_count FROM dataset
+        //                 WHERE \`Sub Category\` = '${subCategoryName}'`,
+        //             {
+        //                 contentType: "text/plain",
+        //             }
+        //         );
 
-                const uniqueCustomerCount = fetchedData.rows[0].unique_customer_count;
-                setUniqueCustomerCount(uniqueCustomerCount);
-                console.log("Unique Customer Count:", uniqueCustomerCount);
-            } catch (error) {
-                console.error("Fetch error:", error);
-                if (error.response) {
-                    console.error("API Response Error:", error.response);
-                }
-            }
-        };
+        //         const uniqueCustomerCount = fetchedData.rows[0].unique_customer_count;
+        //         setUniqueCustomerCount(uniqueCustomerCount);
+        //         console.log("Unique Customer Count:", uniqueCustomerCount);
+        //     } catch (error) {
+        //         console.error("Fetch error:", error);
+        //         if (error.response) {
+        //             console.error("API Response Error:", error.response);
+        //         }
+        //     }
+        // };
 
         const fetchMostSales = async () => {
             try {
@@ -204,75 +204,75 @@ const SlideContent = ({ brand, subCategoryName, productName }) => {
             }
         };
 
-        const fetchTop5 = async () => {
-            console.log("------------category", category);
-            try {
-                const fetchedData = await domo.post(
-                    "/sql/v1/dataset",
-                    `SELECT 
-                        \`Product Name\`, 
-                        SUM(\`Monthly Total\`) AS \`Total_Sales\`
-                    FROM dataset
-                    WHERE \`Sub Category\` = '${subCategoryName}'
-                    GROUP BY \`Product Name\`
-                    ORDER BY \`Total_Sales\` DESC
-                    LIMIT 5`,
-                    {
-                        contentType: "text/plain",
-                    }
-                );                  
-                console.log("------------", fetchedData);
+        // const fetchTop5 = async () => {
+        //     console.log("------------category", category);
+        //     try {
+        //         const fetchedData = await domo.post(
+        //             "/sql/v1/dataset",
+        //             `SELECT 
+        //                 \`Product Name\`, 
+        //                 SUM(\`Monthly Total\`) AS \`Total_Sales\`
+        //             FROM dataset
+        //             WHERE \`Sub Category\` = '${subCategoryName}'
+        //             GROUP BY \`Product Name\`
+        //             ORDER BY \`Total_Sales\` DESC
+        //             LIMIT 5`,
+        //             {
+        //                 contentType: "text/plain",
+        //             }
+        //         );                  
+        //         console.log("------------", fetchedData);
                 
-                // const channelName = fetchedData.rows.reduce((acc, [Channel_Name, total]) => {
-                //     acc[Channel_Name] = total;
-                //     return acc;
-                // }, {});
-                const channelName = fetchedData.rows.reduce(
-                    (acc, [Channel_Name, total]) => {
-                        acc[0].push(Channel_Name);
-                        acc[1].push(total);
-                        return acc;
-                    },
-                    [[], []] // Start with two empty arrays
-                );
-                setBar2(channelName);
-                // console.log("Fetched data with Channel Name count:", channelName);
-            } catch (error) {
-                console.error("Fetch error:", error);
-            }
-        }
+        //         // const channelName = fetchedData.rows.reduce((acc, [Channel_Name, total]) => {
+        //         //     acc[Channel_Name] = total;
+        //         //     return acc;
+        //         // }, {});
+        //         const channelName = fetchedData.rows.reduce(
+        //             (acc, [Channel_Name, total]) => {
+        //                 acc[0].push(Channel_Name);
+        //                 acc[1].push(total);
+        //                 return acc;
+        //             },
+        //             [[], []] // Start with two empty arrays
+        //         );
+        //         setBar2(channelName);
+        //         // console.log("Fetched data with Channel Name count:", channelName);
+        //     } catch (error) {
+        //         console.error("Fetch error:", error);
+        //     }
+        // }
 
-        const fetchTopProducts = async () => {
-            try {
-                const fetchedData = await domo.post(
-                    "/sql/v1/dataset",
-                    `SELECT 
-                        \`Product Name\`, 
-                        SUM(\`Monthly Total\`) AS \`Total_Sales\`
-                    FROM dataset
-                    WHERE \`Sub Category\` = '${subCategoryName}'
-                    GROUP BY \`Product Name\`
-                    ORDER BY \`Total_Sales\` DESC
-                    LIMIT 5`,
-                    {
-                        contentType: "text/plain",
-                    }
-                );
+        // const fetchTopProducts = async () => {
+        //     try {
+        //         const fetchedData = await domo.post(
+        //             "/sql/v1/dataset",
+        //             `SELECT 
+        //                 \`Product Name\`, 
+        //                 SUM(\`Monthly Total\`) AS \`Total_Sales\`
+        //             FROM dataset
+        //             WHERE \`Sub Category\` = '${subCategoryName}'
+        //             GROUP BY \`Product Name\`
+        //             ORDER BY \`Total_Sales\` DESC
+        //             LIMIT 5`,
+        //             {
+        //                 contentType: "text/plain",
+        //             }
+        //         );
 
-                const topProducts = fetchedData.rows.reduce(
-                    (acc, [productName, totalSales]) => {
-                        acc[0].push(productName);
-                        acc[1].push(totalSales);
-                        return acc;
-                    },
-                    [[], []]
-                );
+        //         const topProducts = fetchedData.rows.reduce(
+        //             (acc, [productName, totalSales]) => {
+        //                 acc[0].push(productName);
+        //                 acc[1].push(totalSales);
+        //                 return acc;
+        //             },
+        //             [[], []]
+        //         );
 
-                setTopProducts(topProducts); // You'll need to create this state variable
-            } catch (error) {
-                console.error("Fetch error:", error);
-            }
-        }
+        //         setTopProducts(topProducts); // You'll need to create this state variable
+        //     } catch (error) {
+        //         console.error("Fetch error:", error);
+        //     }
+        // }
 
         const fetchCountryMonthlyTotal = async (productName) => {
             try {
@@ -319,11 +319,11 @@ const SlideContent = ({ brand, subCategoryName, productName }) => {
             fetchChannelType();
             fetchMostSales();
             fetchGenderData();
-            fetchTop5();
-            fetchTopProducts();
+            // fetchTop5();
+            // fetchTopProducts();
             fetchCountryMonthlyTotal();
-            fetchUniqueCustomerCount();
-            fetchUniqueProductsCount();
+            // fetchUniqueCustomerCount();
+            // fetchUniqueProductsCount();
         }
     }, [productName]);
 
