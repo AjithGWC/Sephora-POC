@@ -8,6 +8,7 @@ import PercentageSlider from "../chart/percentage";
 import { GlobalContext } from "../globalContext/context";
 import domo from "ryuu.js";
 import { BsBarChartLine } from "react-icons/bs";
+import { FaIndianRupeeSign } from "react-icons/fa6";
 
 const SlideContent = ({ brand, subCategoryName, productName }) => {
     console.log("brand", productName);
@@ -17,6 +18,9 @@ const SlideContent = ({ brand, subCategoryName, productName }) => {
     const [bar2, setBar2] = useState([]);
     const [genderPercentage, setGenderPercentage] = useState("");
     const [pie, setPie] = useState([]);
+    const [totalSales, setTotalSales] = useState(0);
+    const [topProducts, setTopProducts] = useState([]);
+    const [uniqueCustomerCount, setUniqueCustomerCount] = useState([]);
 
     const {
         state: { category, product },
@@ -86,6 +90,28 @@ const SlideContent = ({ brand, subCategoryName, productName }) => {
                 console.error("Fetch error:", error);
             }
         }
+        const fetchUniqueCustomerCount = async () => {
+            try {
+                const fetchedData = await domo.post(
+                    "/sql/v1/dataset",
+                    `SELECT COUNT(DISTINCT \`Unique Customers\`) AS unique_customer_count FROM dataset
+                        WHERE \`Sub Category\` = '${subCategoryName}'`,
+                    {
+                        contentType: "text/plain",
+                    }
+                );
+
+                const uniqueCustomerCount = fetchedData.rows[0].unique_customer_count;
+                setUniqueCustomerCount(uniqueCustomerCount);
+                console.log("Unique Customer Count:", uniqueCustomerCount);
+            } catch (error) {
+                console.error("Fetch error:", error);
+                if (error.response) {
+                    console.error("API Response Error:", error.response);
+                }
+            }
+        };
+
 
         const fetchMostSales = async () => {
             try {
@@ -113,6 +139,10 @@ const SlideContent = ({ brand, subCategoryName, productName }) => {
                     },
                     [[], []] // Start with two empty arrays
                 );
+                const calculatedTotalSales = sales[1].reduce((sum, value) => sum + value, 0);
+                setTotalSales(calculatedTotalSales);
+                console.log("calculatepercentage", calculatedTotalSales)
+
                 setBar1(sales);
                 // console.log("Fetched monthly total data:", sales);
             } catch (error) {
@@ -180,6 +210,38 @@ const SlideContent = ({ brand, subCategoryName, productName }) => {
             }
         }
 
+        const fetchTopProducts = async () => {
+            try {
+                const fetchedData = await domo.post(
+                    "/sql/v1/dataset",
+                    `SELECT 
+                        \`Product Name\`, 
+                        SUM(\`Monthly Total\`) AS \`Total_Sales\`
+                    FROM dataset
+                    WHERE \`Sub Category\` = '${subCategoryName}'
+                    GROUP BY \`Product Name\`
+                    ORDER BY \`Total_Sales\` DESC
+                    LIMIT 5`,
+                    {
+                        contentType: "text/plain",
+                    }
+                );
+
+                const topProducts = fetchedData.rows.reduce(
+                    (acc, [productName, totalSales]) => {
+                        acc[0].push(productName);
+                        acc[1].push(totalSales);
+                        return acc;
+                    },
+                    [[], []]
+                );
+
+                setTopProducts(topProducts); // You'll need to create this state variable
+            } catch (error) {
+                console.error("Fetch error:", error);
+            }
+        }
+
         const fetchCountryMonthlyTotal = async (productName) => {
             try {
                 const fetchedData = await domo.post(
@@ -226,7 +288,9 @@ const SlideContent = ({ brand, subCategoryName, productName }) => {
             fetchMostSales();
             fetchGenderData();
             fetchChannelName();
+            fetchTopProducts();
             fetchCountryMonthlyTotal();
+            fetchUniqueCustomerCount();
         }
     }, [productName]);
 
@@ -247,25 +311,32 @@ const SlideContent = ({ brand, subCategoryName, productName }) => {
                 <div className="flex flex-col gap-2 mb-4 pb-3 pt-4 h-[500px] text-stone-700 font-semibold">
                     <div className="grid grid-cols-4 gap-2">
                         <div className="bg-white/60 p-5 rounded-lg h-full">
-                            <h1 className="flex items-center gap-2">
+                            <h1 className="flex items-center gap-2 text-xl">
                                 <BsBarChartLine className="w-5 h-5" />
                                 <span>Total Sales</span>
                             </h1>
+                            {/* <h4 className="font-semibold text-xl mt-2">Last Year</h4> */}
                             {Array.isArray(line2) && line2.length > 0 && (
                                 <LineChart2 datas={bar1} />
                             )}
                         </div>
                         <div className="bg-white/60 py-5 px-7 rounded-lg">
-                            <h1>Country's Total Transaction</h1>
+                            <h1 className="flex items-center space-x-3 text-xl">
+                                <FaIndianRupeeSign className="w-5 h-5" />
+                                <span>Total Transaction</span>
+                            </h1>
+                            {/* <h4 className="font-semibold text-xl mt-2">Last Year</h4> Added mt-2 */}
                             {Array.isArray(line2) && line2.length > 0 && (
                                 <LineChart1 datas={line1} />
                             )}
                         </div>
+
                         <div className="flex flex-col gap-2 mb-4 h-full">
-                            <div className="bg-white/60 p-2 rounded-lg h-full">21</div>
+                            <div className="bg-white/60 p-2 rounded-lg h-full">{uniqueCustomerCount}</div>
+                            {(console.log("uniqqqqqqqq", uniqueCustomerCount))}
                             <div className="bg-white/60 p-2 rounded-lg h-full">21</div>
                         </div>
-                        <div className="bg-white/60 p-5 rounded-lg">
+                        <div className="bg-white/60 p-5 rounded-lg text-xl">
                             <h1>Gender Percentage</h1>
                             {Array.isArray(line2) && line2.length > 0 && (
                                 <PercentageSlider percentage={genderPercentage} />
@@ -273,7 +344,7 @@ const SlideContent = ({ brand, subCategoryName, productName }) => {
                         </div>
                     </div>
                     <div className="grid grid-cols-3 gap-2 items-stretch h-[90%]">
-                        <div className="bg-white/60 pt-5 rounded-lg h-[90%]">
+                        <div className="bg-white/60 pt-5 rounded-lg h-[90%] text-xl">
                             <h1 className="pl-3">Channel Type</h1>
                             <div className="h-full max-h-[180px] overflow-hidden">
                                 {Array.isArray(line2) && line2.length > 0 && (
@@ -281,13 +352,13 @@ const SlideContent = ({ brand, subCategoryName, productName }) => {
                                 )}
                             </div>
                         </div>
-                        <div className="bg-white/60 p-5 rounded-lg h-[90%]">
+                        <div className="bg-white/60 p-5 rounded-lg h-[90%] text-xl">
                             <h1>Most Sales</h1>
                             {Array.isArray(line2) && line2.length > 0 && (
                                 <BarChart1 datas={bar1} />
                             )}
                         </div>
-                        <div className="bg-white/60 p-5 h-[90%] rounded-lg">
+                        <div className="bg-white/60 p-5 h-[90%] rounded-lg text-xl">
                             <h1>Channel Name</h1>
                             {Array.isArray(line2) && line2.length > 0 && (
                                 <BarChart2 datas={bar2} />

@@ -11,14 +11,14 @@ import {
 // Register chart components
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const PieChart = ({datas}) => {
+const PieChart = ({ datas }) => {
   const data = {
     labels: datas[0],
     datasets: [
       {
         data: datas[1],
-        backgroundColor: ['#7A4E5D', '#8C6F74'],
-        borderColor: ['#fff', '#fff'],
+        backgroundColor: ['#de0f3f', '#000000'], // Updated colors
+        borderColor: ['#ffffff', '#ffffff'],      // Keeping white border for contrast
         borderWidth: 1,
       },
     ],
@@ -29,14 +29,16 @@ const PieChart = ({datas}) => {
     plugins: {
       legend: {
         position: 'bottom',
+        labels: {
+          color: '#000000', // Legend text color (black)
+        },
       },
     },
   };
-  console.log(":::::::::::");
-  
+
   return (
     <div className='text-center h-[95%] flex justify-center'>
-        <Pie className='pie' data={data} options={options} />
+      <Pie className='pie' data={data} options={options} />
     </div>
   );
 };

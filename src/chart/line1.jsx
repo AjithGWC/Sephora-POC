@@ -22,16 +22,28 @@ ChartJS.register(
   Legend
 );
 
+// Helper function to format numbers
+const formatNumber = (num) => {
+  if (num >= 1e6) {
+    return (num / 1e6).toFixed(1) + 'M';
+  } else if (num >= 1e3) {
+    return (num / 1e3).toFixed(1) + 'K';
+  }
+  return num;
+};
+
 const LineChart1 = ({ datas }) => {
   const data = {
     labels: datas[0],
     datasets: [
       {
         data: datas[1],
-        borderColor: 'rgb(75, 64, 64)',
+        borderColor: '#de0f3f',             // 🔥 Line color -> Red
         tension: 0.4,
         fill: false,
-        pointBackgroundColor: 'rgb(75, 64, 64)', 
+        pointBackgroundColor: 'transparent',     // No point background color
+        pointBorderColor: 'transparent',        // No point border color
+        borderDash: [],                       // Ensure no dashed lines
       },
     ],
   };
@@ -46,20 +58,26 @@ const LineChart1 = ({ datas }) => {
         display: false,
       },
       tooltip: {
-        enabled: true, // ✅ Enable tooltip
-        backgroundColor: 'rgba(255, 255, 255, 0.9)', 
-        titleColor: '#000', 
-        bodyColor: '#000',  
+        enabled: true,
+        backgroundColor: 'rgba(255, 255, 255, 0.9)',
+        titleColor: '#000',
+        bodyColor: '#000',
         borderColor: '#ccc',
         borderWidth: 1,
+        callbacks: {
+          label: function (context) {
+            const value = context.raw;
+            return formatNumber(Number(value));
+          }
+        }
       },
     },
     scales: {
       x: {
-        display: false, // ✅ Hide x-axis
+        display: false,
       },
       y: {
-        display: false, // ✅ Hide y-axis
+        display: false,
       },
     },
   };

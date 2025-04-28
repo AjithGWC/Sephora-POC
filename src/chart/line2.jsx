@@ -22,6 +22,16 @@ ChartJS.register(
   Legend
 );
 
+// Helper function to format numbers (29K, 30M)
+const formatNumber = (num) => {
+  if (num >= 1e6) {
+    return (num / 1e6).toFixed(1) + 'M';
+  } else if (num >= 1e3) {
+    return (num / 1e3).toFixed(1) + 'K';
+  }
+  return num;
+};
+
 const LineChart2 = ({ datas }) => {
   console.log(datas);
 
@@ -30,10 +40,12 @@ const LineChart2 = ({ datas }) => {
     datasets: [
       {
         data: datas[1],
-        borderColor: 'rgb(75, 64, 64)',
+        borderColor: '#de0f3f',            
         tension: 0.4,
         fill: false,
-        pointBackgroundColor: 'rgb(75, 64, 64)', // point color
+        pointBackgroundColor: 'transparent',    
+        pointBorderColor: 'transparent',       
+        borderDash: [],                      
       },
     ],
   };
@@ -49,20 +61,26 @@ const LineChart2 = ({ datas }) => {
       },
       tooltip: {
         enabled: true,
-        backgroundColor: 'rgba(255, 255, 255, 0.9)', // light white
-        titleColor: '#000', // black title
-        bodyColor: '#000',  // black value
-        borderColor: '#ccc', // light grey border
+        backgroundColor: 'rgba(255, 255, 255, 0.9)',
+        titleColor: '#000',
+        bodyColor: '#000',
+        borderColor: '#ccc',
         borderWidth: 1,
-        cornerRadius: 8, // optional: smooth round corners
+        cornerRadius: 8,
+        callbacks: {
+          label: function (context) {
+            const value = context.raw;
+            return formatNumber(Number(value));
+          }
+        }
       },
     },
     scales: {
       x: {
-        display: false, // Hide x-axis
+        display: false,
       },
       y: {
-        display: false, // Hide y-axis
+        display: false,
       },
     },
   };

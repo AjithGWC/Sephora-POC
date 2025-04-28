@@ -13,21 +13,15 @@ import { Bar } from 'react-chartjs-2';
 // Register necessary components
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-const BarChart1 = ({datas}) => {
+const BarChart1 = ({ datas }) => {
   const data = {
     labels: datas[0],
     datasets: [
       {
-        label: 'Votes',
+        label: 'Sales',
         data: datas[1],
-        backgroundColor: [
-          '#3B0A45', // Midnight Plum
-          '#1C1B1F', // Velvet Noir
-          '#5C0A17', // Crimson Wine
-          '#7A4E5D', // Plum Mist
-          '#8C6F74'  // Rosy Taupe
-        ],
-        borderRadius: 6, // Rounded bars (optional)
+        backgroundColor: ['#de0f3f', '#000000'], // Updated colors
+        borderRadius: 6, // Rounded bars
       },
     ],
   };
@@ -40,10 +34,17 @@ const BarChart1 = ({datas}) => {
       },
       title: {
         display: false,
-        text: 'Color Preference Chart',
       },
       tooltip: {
         display: true,
+        callbacks: {
+          label: function (context) {
+            const value = context.parsed.y || 0;
+            if (value >= 1e6) return (value / 1e6).toFixed(1) + 'M';
+            if (value >= 1e3) return (value / 1e3).toFixed(1) + 'K';
+            return value;
+          }
+        }
       }
     },
     scales: {
@@ -51,7 +52,7 @@ const BarChart1 = ({datas}) => {
         ticks: {
           color: '#4b5563',
           font: {
-            size: 9, // 👈 Smaller font size for X-axis
+            size: 9,
           },
         },
         grid: {
@@ -59,12 +60,12 @@ const BarChart1 = ({datas}) => {
         },
       },
       y: {
-        display: false, // Hide Y-axis completely
+        display: false,
         ticks: {
-          display: false, // Hide ticks
+          display: false,
         },
         grid: {
-          display: false, // Remove Y-axis grid lines
+          display: false,
         },
       },
     },
