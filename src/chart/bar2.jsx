@@ -29,6 +29,7 @@ const BarChart2 = ({ datas }) => {
   const options = {
     responsive: true,
     maintainAspectRatio: false,
+    indexAxis: 'y', // 👉 Make it horizontal
     plugins: {
       legend: { display: false },
       title: { display: false },
@@ -39,7 +40,6 @@ const BarChart2 = ({ datas }) => {
         grid: { display: false },
       },
       y: {
-        display: false,
         ticks: { color: '#4b5563', font: { size: 9 } },
         grid: { display: false },
       },

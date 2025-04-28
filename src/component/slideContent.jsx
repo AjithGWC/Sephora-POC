@@ -21,6 +21,7 @@ const SlideContent = ({ brand, subCategoryName, productName }) => {
     const [totalSales, setTotalSales] = useState(0);
     const [topProducts, setTopProducts] = useState([]);
     const [uniqueCustomerCount, setUniqueCustomerCount] = useState([]);
+    const [productCount, setProductCount] = useState([]);
 
     const {
         state: { category, product },
@@ -55,6 +56,32 @@ const SlideContent = ({ brand, subCategoryName, productName }) => {
                 );
                 setLine1(countryTransactions);
                 // console.log("countryTransactions:", countryTransactions[0]);
+            } catch (error) {
+                console.error("Fetch error:", error);
+            }
+        };
+
+        const fetchUniqueProductsCount = async () => {
+            try {
+                const query = `
+                    SELECT COUNT(DISTINCT \`Product Name\`) AS unique_product_count
+                    FROM dataset
+                    WHERE \`Sub Category\` = '${subCategoryName}'
+                `;
+        
+                const fetchedData = await domo.post(
+                    "/sql/v1/dataset",
+                    query,
+                    {
+                        contentType: "text/plain",
+                    }
+                );
+                
+                // Assuming the result has the count in the first column
+                const uniqueProductCount = fetchedData.rows[0]; // The count will be in the first element of the first row
+        
+                console.log("Unique Product Count:", uniqueProductCount);
+                setProductCount(uniqueProductCount);  // Assuming you have a state to store the count
             } catch (error) {
                 console.error("Fetch error:", error);
             }
@@ -111,7 +138,6 @@ const SlideContent = ({ brand, subCategoryName, productName }) => {
                 }
             }
         };
-
 
         const fetchMostSales = async () => {
             try {
@@ -178,19 +204,25 @@ const SlideContent = ({ brand, subCategoryName, productName }) => {
             }
         };
 
-        const fetchChannelName = async () => {
+        const fetchTop5 = async () => {
+            console.log("------------category", category);
             try {
                 const fetchedData = await domo.post(
                     "/sql/v1/dataset",
-                    `SELECT \`Channel_Name\`, COUNT(\`Channel_Name\`) AS \`Channel_Name_Count\`
+                    `SELECT 
+                        \`Product Name\`, 
+                        SUM(\`Monthly Total\`) AS \`Total_Sales\`
                     FROM dataset
-                    WHERE \`Product Name\` = '${productName}'
-                    GROUP BY \`Channel_Name\``,
+                    WHERE \`Sub Category\` = '${subCategoryName}'
+                    GROUP BY \`Product Name\`
+                    ORDER BY \`Total_Sales\` DESC
+                    LIMIT 5`,
                     {
                         contentType: "text/plain",
                     }
-                );
-
+                );                  
+                console.log("------------", fetchedData);
+                
                 // const channelName = fetchedData.rows.reduce((acc, [Channel_Name, total]) => {
                 //     acc[Channel_Name] = total;
                 //     return acc;
@@ -287,10 +319,11 @@ const SlideContent = ({ brand, subCategoryName, productName }) => {
             fetchChannelType();
             fetchMostSales();
             fetchGenderData();
-            fetchChannelName();
+            fetchTop5();
             fetchTopProducts();
             fetchCountryMonthlyTotal();
             fetchUniqueCustomerCount();
+            fetchUniqueProductsCount();
         }
     }, [productName]);
 
@@ -332,9 +365,9 @@ const SlideContent = ({ brand, subCategoryName, productName }) => {
                         </div>
 
                         <div className="flex flex-col gap-2 mb-4 h-full">
-                            <div className="bg-white/60 p-2 rounded-lg h-full">{uniqueCustomerCount}</div>
+                            <div className="bg-white/60 p-2 rounded-lg h-full">Unique Customer Count <span className="text-xl">{uniqueCustomerCount ?? 0}</span></div>
                             {(console.log("uniqqqqqqqq", uniqueCustomerCount))}
-                            <div className="bg-white/60 p-2 rounded-lg h-full">21</div>
+                            <div className="bg-white/60 p-2 rounded-lg h-full">Product Count <span className="text-xl">{productCount ?? 0}</span></div>
                         </div>
                         <div className="bg-white/60 p-5 rounded-lg text-xl">
                             <h1>Gender Percentage</h1>
@@ -359,7 +392,7 @@ const SlideContent = ({ brand, subCategoryName, productName }) => {
                             )}
                         </div>
                         <div className="bg-white/60 p-5 h-[90%] rounded-lg text-xl">
-                            <h1>Channel Name</h1>
+                            <h1>Top 5 Products</h1>
                             {Array.isArray(line2) && line2.length > 0 && (
                                 <BarChart2 datas={bar2} />
                             )}
